@@ -224,13 +224,6 @@ class Client(object):
         :param image_id: id for the image to send, gotten from the UploadURL
         """
 
-        if message_type.lower() == 'group':
-            thread_id = recipient_id
-            user_id = None
-        else:
-            thread_id = None
-            user_id = recipient_id
-
         messageAndOTID=generateOfflineThreadingID()
         timestamp = now()
         date = datetime.now()
@@ -270,9 +263,12 @@ class Client(object):
 
         }
 
-
-        
-
+        if message_type == 'user':
+            data['other_user_fbid'] = recipient_id
+        elif message_type == 'group':
+            data['thread_fbid'] = recipient_id
+        else:
+            raise 'unknown message_type'
 
         if image_id:
             data['image_ids[0]'] = image_id
