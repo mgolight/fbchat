@@ -257,7 +257,6 @@ class Client(object):
             'manual_retry_cnt' : '0',
             'signatureID' : getSignatureID(),
             'has_attachment' : image_id != None,
-            'other_user_fbid' : recipient_id,
             'specific_to_list[0]' : 'fbid:' + str(recipient_id),
             'specific_to_list[1]' : 'fbid:' + str(self.uid),            
 
@@ -268,7 +267,7 @@ class Client(object):
         elif message_type == 'group':
             data['thread_fbid'] = recipient_id
         else:
-            raise 'unknown message_type'
+            raise Exception('unknown message_type')
 
         if image_id:
             data['image_ids[0]'] = image_id
